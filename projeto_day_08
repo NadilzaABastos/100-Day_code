@@ -1,0 +1,41 @@
+logo = '''
+                         ___________
+                         \         /
+                          )_______(
+                          |"""""""|_.-._,.---------.,_.-._
+                          |       | | |               | | ''-.
+                          |       |_| |_             _| |_..-'
+                          |_______| '-' `'---------'` '-'
+                          )"""""""(
+                         /_________\\
+                       .-------------.
+                      /_______________\\
+'''
+
+
+bids = {}
+game_over = False
+
+def hight_bid(bid_tracking):
+    hight_bid = 0
+    winner =""
+    for bidder in bid_tracking:
+        bidder_amount = bid_tracking[bidder]
+        if bidder_amount > hight_bid:
+            hight_bid = bidder_amount
+            winner = bidder
+
+    print(f"The winner is {winner} with a bid osf $ {hight_bid}")
+
+
+while not game_over:
+    print(logo)
+    name = str(input("What is your name: "))
+    valor = float(input("What is your bit $ :"))
+    bids[name] = valor
+    another_bidder = input(str("Are there any other bidders? Type 'yes' or 'no' ")).lower()
+    if another_bidder == "no":
+        game_over = True
+        hight_bid(bids)
+    elif another_bidder == "yes":
+        print("\n" * 130)
