@@ -1,0 +1,51 @@
+logo ='''
+╔═╗┬ ┬┌─┐┌─┐┌─┐  ┌┬┐┬ ┬┌─┐  ┌┐┌┬ ┬┌┬┐┌┐ ┌─┐┬─┐  
+║ ╦│ │├┤ └─┐└─┐   │ ├─┤├┤   ││││ ││││├┴┐├┤ ├┬┘  
+╚═╝└─┘└─┘└─┘└─┘   ┴ ┴ ┴└─┘  ┘└┘└─┘┴ ┴└─┘└─┘┴└─  
+'''
+
+from random import randint
+level_easy = 10
+level_hard = 5
+
+def resposta (numero,random_number,vezes):
+    if numero > random_number:
+        print("Too high")
+        return vezes - 1
+    elif numero < random_number:
+        print("Too low")
+        return vezes - 1
+
+    else:
+        print(f"You got it ! The answer was {random_number}")
+
+
+def dificuldade():
+    difficulty_type = input("Type 'easy' or 'hard : \n")
+    if difficulty_type == "easy":
+        return level_easy
+    else:
+        return level_hard
+
+def guess_the_number():
+    print(logo)
+    print("Welcome to the Number Guessing Game !")
+    print("I'm thinking of a numer between 1 and 100")
+    random_number = randint(1, 100)
+
+    vezes = dificuldade()
+    numero = 0
+    while numero != random_number:
+        print(f"You have {vezes} attempts remaining to guess the number.")
+
+        numero = int(input("Make a guess :"))
+        vezes = resposta(numero,random_number,vezes)
+        if vezes == 0:
+            print("You've run out of guesses, you lose.")
+            print(f"The number I was thinking of was {random_number}.")
+            return
+        elif numero != random_number:
+            print("Guess Again")
+
+
+guess_the_number()
