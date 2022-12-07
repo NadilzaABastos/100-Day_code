@@ -1,0 +1,95 @@
+from prettytable import PrettyTable
+
+MENU = {
+    "espresso": {
+        "ingredients": {
+            "water": 50,
+            "coffee": 18,
+        },
+        "cost": 1.5,
+    },
+    "latte": {
+        "ingredients": {
+            "water": 200,
+            "milk": 150,
+            "coffee": 24,
+        },
+        "cost": 2.5,
+    },
+    "cappuccino": {
+        "ingredients": {
+            "water": 250,
+            "milk": 100,
+            "coffee": 24,
+        },
+        "cost": 3.0,
+    }
+}
+
+resources = {
+    "water": 300,
+    "milk": 200,
+    "coffee": 100,
+}
+
+# To work pretty table , you will need to import it in your pycharm configuration
+
+
+table = PrettyTable()
+table.add_column("Drink",["Espresso","Latte","Cappuccino"])
+table.add_column("Price",["$1.50", "$2.50", "$3.00"])
+
+table.align = "l"
+print(table)
+
+money = 0
+
+def check_resources(enough_resource):
+    for drink in enough_resource:
+        if enough_resource[drink] >= resources[drink]:
+            print(f"Sorry there is not enought {drink}")
+            return False
+    return True
+
+def process_coin():
+    print("Please insert coins.")
+    total = int(input("How many quarters :")) * 0.25
+    total += int(input("How many dimes :")) * 0.1
+    total += int(input("How many nickles :")) * 0.05
+    total += int(input("How many pennies :")) * 0.01
+    return total
+
+def check_transaction (money_paid , drink_cost):
+    if money_paid >= drink_cost:
+        troco = round(money_paid - drink_cost, 2)
+        print(f"Here is your change $ {troco} ")
+        global money
+        money += drink_cost
+        return True
+    else:
+        print(" Sorry that is not enough money. Money return .")
+
+def make_coffee(nome_drink , ingredients):
+    for produto in ingredients:
+        resources[produto] -= ingredients[produto]
+        print(f"Here is your {nome_drink}")
+
+
+other_client = True
+
+while other_client:
+    coffee_choise = str(input("What would you like? (espresso/latte/cappuccino :"))
+    if coffee_choise == "off":
+        other_client = False
+    elif coffee_choise == "report":
+        print(f"Water: {resources['water']}ml")
+        print(f"Milk:{resources['milk']}ml")
+        print(f"Coffee:{resources['coffee']}g")
+        print(f"Money: $ {money}")
+    else:
+        type_coffe = MENU[coffee_choise]
+        if check_resources(type_coffe["ingredients"]):
+            payment = process_coin()
+            if check_transaction(payment, type_coffe["cost"]):
+                make_coffee(coffee_choise,type_coffe["ingredients"])
+
