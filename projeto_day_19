@@ -1,0 +1,41 @@
+############# PROJECT TURTLES RACE #############
+
+
+import turtle
+from turtle import Turtle,Screen
+import random
+
+screen = Screen()
+screen.setup(width=500, height=400)
+colors = ["orange","green","red","purple","blue","yellow"]
+start_race= False
+choise = screen.textinput(title="Make your bet", prompt= "Which turtle will win the race? Enter a color")
+position_y = [-100, -70, -40, -10, 20, 50]
+all_turtles = []
+
+for turtles in range(0,6):
+    new_turtle = Turtle(shape="turtle")
+    new_turtle.penup()
+    new_turtle.color(colors[turtles])
+    new_turtle.goto(x=-230, y=position_y[turtles])
+    all_turtles.append(new_turtle)
+
+if choise:
+    start_race = True
+
+while start_race:
+    for turtle in all_turtles:
+        if turtle.xcor() > 230:
+            start_race= False
+            winner_turtle = turtle.pencolor()
+            if winner_turtle == choise:
+                print(f"You won ! The {winner_turtle} turtle is the winner :)")
+
+            else:
+                print(f"Sorry , The winner turtle is {winner_turtle}")
+
+        distancia = random.randint(0, 10)
+        turtle.forward(distancia)
+
+screen.exitonclick()
+
