@@ -1,8 +1,3 @@
-################################################
-# PROJETO GAME SNAKE PART 1
-################################################
-
-
 from turtle import Turtle, Screen
 position = [(0,0),(-20,0),(-40,0)]
 UP = 90
@@ -18,12 +13,19 @@ class Snake:
         self.head = self.all_turtles[0]
 
     def create_snake(self):
-        for turtles in position:
-            new_turtle = Turtle("square")
-            new_turtle.color("white")
-            new_turtle.penup()
-            new_turtle.goto(turtles)
-            self.all_turtles.append(new_turtle)
+        for t_turtles in position:
+            self.grow_snake(t_turtles)
+
+    def grow_snake(self, t_turtles):
+        new_turtle = Turtle("square")
+        new_turtle.color("white")
+        new_turtle.penup()
+        new_turtle.goto(t_turtles)
+        self.all_turtles.append(new_turtle)
+
+    def extent(self):
+        self.grow_snake(self.all_turtles[-1].position())
+
 
     def move(self):
         for conjuto in range(len(self.all_turtles) - 1, 0, -1):
