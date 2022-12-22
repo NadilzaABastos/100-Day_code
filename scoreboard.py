@@ -4,25 +4,26 @@ class Scoreboard (Turtle):
 
     def __init__(self):
         super().__init__()
-        self.score = 0
+        self.left_score = 0
+        self.right_score = 0
         self.color("white")
         self.penup()
-        self.goto(0, 270)
-        self.write(f"Score : {self.score}",align="center",font= ("Comic Sans", 20,"normal"))
         self.hideturtle()
+        self.updade_score()
 
 
-    def game_over(self):
-        self.goto(0, 0)
-        self.write(f"GAME OVER", align="center", font=("Comic Sans", 20, "normal"))
-
-
-    def increase_score(self):
-        self.score += 1
+    def updade_score(self):
         self.clear()
-        self.write(f"Score : {self.score}", align="center", font=("Comic Sans", 20, "normal"))
+        self.goto(-120, 200)
+        self.write(f"Score : {self.left_score}", align="center", font=("Comic Sans", 30, "normal"))
+        self.goto(120, 200)
+        self.write(f"Score : {self.right_score}", align="center", font=("Comic Sans", 30, "normal"))
 
+    def left_point(self):
+        self.left_score += 1
+        self.updade_score()
 
-
-
+    def right_point(self):
+        self.right_score += 1
+        self.updade_score()
 
