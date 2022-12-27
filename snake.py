@@ -23,6 +23,13 @@ class Snake:
         new_turtle.goto(t_turtles)
         self.all_turtles.append(new_turtle)
 
+    def reset(self):
+        for seg in self.all_turtles:
+            seg.goto(1000, 1000)
+        self.all_turtles.clear()
+        self.create_snake()
+        self.head = self.all_turtles[0]
+
     def extent(self):
         self.grow_snake(self.all_turtles[-1].position())
 

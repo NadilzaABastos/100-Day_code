@@ -1,28 +1,37 @@
 from turtle import Turtle
 
-FONT = ("Courier", 24, "normal")
-
-
 class Scoreboard (Turtle):
+
     def __init__(self):
         super().__init__()
-        self.score = 1
-        self.color("black")
+        self.score = 0
+        with open("high_score.txt") as data:
+            self.high_score = int(data.read())
+        self.color("white")
         self.penup()
+        self.goto(0, 270)
+        self.updade_score()
         self.hideturtle()
-        self.updade_level()
 
-    def updade_level(self):
+
+    def updade_score(self):
         self.clear()
-        self.goto(0, 250)
-        self.write(f"Level : {self.score} ", align= "center", font=FONT)
+        self.write(f"Score : {self.score} High Score {self.high_score}", align="center", font=("Comic Sans", 20, "normal"))
 
-    def point(self):
+    def reset(self):
+        if self.score > self.high_score:
+            self.high_score = self.score
+            with open("high_score.txt", mode="w") as data:
+                data.write(f"{self.high_score}")
+        self.score = 0
+        self.updade_score()
+
+
+    def increase_score(self):
         self.score += 1
-        self.updade_level()
+        self.updade_score()
 
-    def game_over(self):
-        self.goto(0,0)
-        self.write(f"GAME OVER", align="center", font=("Comic Sans", 20, "normal"))
+
+
 
 
