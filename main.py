@@ -1,50 +1,16 @@
-from turtle import Turtle, Screen
-from snake import Snake
-from food import Food
-from scoreboard import Scoreboard
-import time
+import pandas
 
-screen = Screen()
-screen.setup(width=600, height=600)
-screen.bgcolor("black")
-screen.title("Snake Game")
-screen.tracer(0)
+data = pandas.read_csv ("2018_Central_Park_Squirrel_Census_-_Squirrel_Data.csv")
+grey_s = len(data[data["Primary Fur Color"] == "Gray"])
+cinnamon_s= len(data[data["Primary Fur Color"] == "Cinnamon"])
+black_s = len(data[data["Primary Fur Color"] == "Black"])
 
-snake = Snake()
-food = Food()
-scoreboard = Scoreboard()
+new_census = {
+    "Fun Color" : ["Gray", "Cinnamon", "Black"],
+    "Count": [grey_s, cinnamon_s, black_s]
 
-screen.listen()
-screen.onkey(snake.up, "Up")
-screen.onkey(snake.down, "Down")
-screen.onkey(snake.left, "Left")
-screen.onkey(snake.right, "Right")
+}
 
-game_start = True
-
-while game_start:
-    screen.update()
-    time.sleep(0.1)
-    snake.move()
-
-    # Detect food
-    if snake.head.distance(food) < 13:
-        food.refresh()
-        snake.extent()
-        scoreboard.increase_score()
-
-    #  Collision wall
-
-    if snake.head.xcor() > 290 or snake.head.xcor() < -290 or snake.head.ycor() > 290 or snake.head.ycor() < -290:
-        scoreboard.reset()
-        snake.reset()
-
-    #  Collision tail
-    for segment in snake.all_turtles:
-        if segment == snake.head:
-            pass
-        elif snake.head.distance(segment) < 10:
-            scoreboard.reset()
-            snake.reset()
-
-screen.exitonclick()
+new_frame = pandas.DataFrame(new_census)
+new_frame.to_csv("squirrel_count.csv")
+print(new_frame)
